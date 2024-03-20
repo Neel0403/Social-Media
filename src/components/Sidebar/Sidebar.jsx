@@ -9,12 +9,17 @@ import {
 } from "react-icons/io5";
 import { BsFillQuestionSquareFill } from "react-icons/bs";
 import { FaUserGraduate, FaCalendarDay } from "react-icons/fa";
-import testImage from "../../assets/profilePic.png";
+// import testImage from "../../assets/profilepic.jpg";
+import { Friends } from "../../data/dummyData";
+import FriendsList from "../FriendsList/FriendsList";
 
 const Sidebar = () => {
   return (
-    <div style={{ flex: 3, height: "calc(100vh-50px)" }} className="custom-scrollbar overflow-y-auto">
-      <div className="p-[20px]">
+    <div
+      style={{ flex: 3, height: "calc(100vh - 50px)" }}
+      className="custom-scrollbar overflow-y-auto sticky top-[50px]"
+    >
+      <div className=" p-[20px] ">
         <ul className="sidebarList m-0 p-0">
           <li>
             <SiFeedly />
@@ -30,9 +35,7 @@ const Sidebar = () => {
           </li>
           <li>
             <IoChatboxEllipsesSharp />
-            <span>
-              <span>Chats</span>
-            </span>
+            <span>Chat</span>
           </li>
           <li>
             <IoBookmarks />
@@ -56,70 +59,17 @@ const Sidebar = () => {
           </li>
         </ul>
         <div className="button">
-          <button className="rounded-md bg-slate-200 w-[150px] p-[10px]">
-            {""}
+          <button className="rounded-md bg-slate-200  w-[150px] p-[10px]">
+            {" "}
             See More
           </button>
         </div>
         <hr className="mt-[20px]" />
         <div className="mt-[20px]">
           <ul className="sidebarList">
-            <li>
-              <img
-                src={testImage}
-                alt="profile pic"
-                className="w-[32px] h-[32px] rounded-full object-cover"
-              />
-              <span>Neel Oza</span>
-            </li>
-            <li>
-              <img
-                src={testImage}
-                alt="profile pic"
-                className="w-[32px] h-[32px] rounded-full object-cover"
-              />
-              <span>Neel Oza</span>
-            </li>
-            <li>
-              <img
-                src={testImage}
-                alt="profile pic"
-                className="w-[32px] h-[32px] rounded-full object-cover"
-              />
-              <span>Neel Oza</span>
-            </li>
-            <li>
-              <img
-                src={testImage}
-                alt="profile pic"
-                className="w-[32px] h-[32px] rounded-full object-cover"
-              />
-              <span>Neel Oza</span>
-            </li>
-            <li>
-              <img
-                src={testImage}
-                alt="profile pic"
-                className="w-[32px] h-[32px] rounded-full object-cover"
-              />
-              <span>Neel Oza</span>
-            </li>
-            <li>
-              <img
-                src={testImage}
-                alt="profile pic"
-                className="w-[32px] h-[32px] rounded-full object-cover"
-              />
-              <span>Neel Oza</span>
-            </li>
-            <li>
-              <img
-                src={testImage}
-                alt="profile pic"
-                className="w-[32px] h-[32px] rounded-full object-cover"
-              />
-              <span>Neel Oza</span>
-            </li>
+            {Friends.map((friend) => (
+              <FriendsList key={friend.id} friend={friend} />
+            ))}
           </ul>
         </div>
       </div>
