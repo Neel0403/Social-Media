@@ -2,6 +2,8 @@ import React from "react";
 import birthDayIcon from "../../assets/gift.png";
 import adImage from "../../assets/ad.jpg";
 import profilePic from "../../assets/profilePic.png";
+import OnlineUsers from "../OnlineUsers/OnlineUsers";
+import { Users } from "../../data/dummyData";
 
 const RightBar = () => {
   return (
@@ -24,17 +26,9 @@ const RightBar = () => {
         />
         <h1 className="font-bold text-lg mb-[20px]">Online</h1>
         <ul className="m-0 p-0">
-          <li className="flex items-center mb-[10px]">
-            <div className="mr-[10px] relative">
-              <img
-                src={profilePic}
-                alt="Profile Picture"
-                className="w-[40px] h-[40px] object-cover rounded-full"
-              />
-              <span className="w-[12px] h-[12px] rounded-full bg-green-500 absolute top-[-1px] right-0 border-[2px] border-white"></span>
-            </div>
-            <span className="font-bold">ABC XYZ</span>
-          </li>
+          {Users.map((user) => (
+            <OnlineUsers key={user.id} user={user} />
+          ))}
         </ul>
       </div>
     </div>
