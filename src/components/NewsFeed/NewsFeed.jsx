@@ -1,12 +1,15 @@
 import React from "react";
 import UploadPost from "../UploadPost/UploadPost";
 import Post from "../Post/Post";
+import { Posts } from "../../data/dummyData";
 
 const NewsFeed = () => {
   return (
     <div style={{ flex: 5.5 }} className="">
       <UploadPost />
-      <Post />
+      {Posts.map((post) => (
+        <Post key={post.id} post={post} />
+      ))}
     </div>
   );
 };

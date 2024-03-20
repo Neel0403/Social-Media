@@ -2,22 +2,28 @@ import React from "react";
 import { MdOutlineMoreVert } from "react-icons/md";
 import profilePic from "../../assets/profilePic.png";
 import postPic from "../../assets/postPic.jpg";
-import likeIcon from "../../assets/like.png"
-import heartIcon from "../../assets/heart.png"
+import likeIcon from "../../assets/like.png";
+import heartIcon from "../../assets/heart.png";
+import { Users } from "../../data/dummyData";
 
-const Post = () => {
+const Post = ({ post }) => {
   return (
     <div className="w-full rounded-md shadow-lg mt-[30px] mb-[30px] p-[10px]">
       <div className="p-[10px]">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <img
-              src={profilePic}
+              src={
+                Users.filter((user) => user.id === post?.userId)[0]
+                  .profilePicture
+              }
               alt="Profile Picture"
               className="w-[32px] h-[32px] rounded-full object-cover"
             />
-            <span className="font-bold ml-[10px] mr-[10px]">Neel Oza</span>
-            <span className="text-sm">20 mins ago</span>
+            <span className="font-bold ml-[10px] mr-[10px]">
+              {Users.filter((user) => user.id === post?.userId)[0].username}
+            </span>
+            <span className="text-sm">{post.date}</span>
           </div>
           <div>
             <MdOutlineMoreVert className="text-xl cursor-pointer" />
@@ -25,9 +31,9 @@ const Post = () => {
         </div>
       </div>
       <div className="mt-[20px] mb-[20px]">
-        <span>Hello</span>
+        <span>{post?.desc}</span>
         <img
-          src={postPic}
+          src={post.photo}
           alt="Post Picture"
           className="mt-[20px] w-full object-contain"
           style={{ maHeight: "500px" }}
@@ -35,12 +41,14 @@ const Post = () => {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-[5px]">
-            <img src={likeIcon} alt="likeIcon" className="w-[24px] h-[24px]" />
-            <img src={heartIcon} alt="heartIcon" className="w-[24px] h-[24px]" />
-            <span className="text-sm">567 likes</span>
+          <img src={likeIcon} alt="likeIcon" className="w-[24px] h-[24px]" />
+          <img src={heartIcon} alt="heartIcon" className="w-[24px] h-[24px]" />
+          <span className="text-sm">{post.like}</span>
         </div>
         <div>
-            <span className="cursor-pointer border-b-[1px] border-slate-300 text-sm">52 comments</span>
+          <span className="cursor-pointer border-b-[1px] border-slate-300 text-sm">
+            {post.comment}
+          </span>
         </div>
       </div>
     </div>
