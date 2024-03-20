@@ -14,7 +14,7 @@ const RightBar = () => {
             className="w-[40px] h-[40px] mr-[10px]"
           />
           <span className="font-semibold text-md">
-            <b>Neel Oza</b> and<b>3 others</b> have birthday today
+            <b>Neel Oza</b> and<b> 3 others</b> have birthday today
           </span>
         </div>
         <img
