@@ -9,7 +9,9 @@ export const registerUser = async (body) => {
     password: hashedPassword,
   });
 
-  const { password, ...data } = newUser._doc; // doesn't return password
+  const { password, ...data } = newUser._doc;
 
   await newUser.save();
+
+  return newUser;
 };
