@@ -5,9 +5,9 @@ export const register = async (req, res) => {
   try {
     const newUser = await registerUser(req.body);
 
-    const { password, ...data } = newUser;
+    const { password, ...data } = newUser._doc;
     res.status(200).json({
-      data,
+      newUser,
       message: "User Registered Successfully.",
     });
   } catch (error) {
