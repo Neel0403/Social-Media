@@ -1,4 +1,4 @@
-import { updateUser } from "../services/user.service.js";
+import { deleteUser, updateUser } from "../services/user.service.js";
 
 export const updateUserController = async (req, res) => {
   try {
@@ -10,5 +10,16 @@ export const updateUserController = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
+  }
+};
+
+export const deleteUserController = async (req, res) => {
+  try {
+    await deleteUser(req.params.id);
+    res.status(200).json({
+      message: "Account has been deleted succesfully",
+    });
+  } catch (error) {
+    throw error;
   }
 };
