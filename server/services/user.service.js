@@ -33,3 +33,12 @@ export const deleteUser = async (userId) => {
     throw err;
   }
 };
+
+export const getUser = async (userId) => {
+  try {
+    const user = await userModel.findById(userId);
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
