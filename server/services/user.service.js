@@ -25,3 +25,11 @@ export const updateUser = async (userId, updateData) => {
     throw err;
   }
 };
+
+export const deleteUser = async (userId) => {
+  try {
+    await userModel.findByIdAndDelete(userId);
+  } catch (err) {
+    throw err;
+  }
+};
