@@ -41,7 +41,7 @@ const userSchema = new Schema({
     type: Array,
     default: [],
   },
-  follwoings: {
+  followings: {
     type: Array,
     default: [],
   },
