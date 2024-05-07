@@ -1,6 +1,7 @@
 import {
   createPost,
   getPost,
+  getTimelinePosts,
   likeAndDislike,
   updatePost,
 } from "../services/post.service.js";
@@ -65,7 +66,24 @@ export const getPostController = async (req, res) => {
 
     res.status(200).json({
       post,
-      message: "Post has benn fetched successfully",
+      message: "Post has been fetched successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Post fetch failed",
+      error,
+    });
+  }
+};
+
+export const getTimelinePostsController = async (req, res) => {
+  try {
+    const timelinePosts = await getTimelinePosts(req.body);
+
+    res.status(200).json({
+      timelinePosts,
+      message: "Timeline Post has been fetched successfully",
     });
   } catch (error) {
     console.log(error);
