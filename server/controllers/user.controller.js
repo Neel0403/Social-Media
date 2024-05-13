@@ -44,7 +44,7 @@ export const getUserController = async (req, res) => {
     const user = await getUser(req.params.id);
     const { password, ...data } = user._doc;
     res.status(200).json({
-      data,
+      userInfo: data,
       message: "Account has been fetched successfully",
     });
   } catch (error) {
