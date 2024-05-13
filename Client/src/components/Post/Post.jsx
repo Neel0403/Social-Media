@@ -1,12 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdOutlineMoreVert } from "react-icons/md";
 import likeIcon from "../../assets/like.png";
 import heartIcon from "../../assets/heart.png";
 import { Users } from "../../data/dummyData";
+import userImage from "./assets/userImage1.jpg";
+import axios from "axios";
 
 const Post = ({ post }) => {
   const [like, setLike] = useState(post.like);
   const [isLiked, setIsLiked] = useState(false);
+  const [user, setUser] = useState([]);
+
+  console.log(user);
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:5000/api/v1/users/${post.userId}`
+        );
+        console.log(res);
+        setUser(res.data.userInfo);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getUserInfo();
+  }, [post.userId]);
 
   const handleLike = () => {
     setLike(isLiked ? like - 1 : like + 1);
@@ -18,15 +39,12 @@ const Post = ({ post }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <img
-              src={
-                Users.filter((user) => user.id === post?.userId)[0]
-                  .profilePicture
-              }
+              src={user.profilePicture || userImage}
               alt="Profile Picture"
               className="w-[32px] h-[32px] rounded-full object-cover"
             />
             <span className="font-bold ml-[10px] mr-[10px]">
-              {Users.filter((user) => user.id === post?.userId)[0].username}
+              {user.username}
             </span>
             <span className="text-sm">{post.date}</span>
           </div>
