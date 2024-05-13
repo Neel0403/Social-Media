@@ -15,6 +15,6 @@ router.put("/update-post/:id", updatePostController);
 router.delete("/delete-post/:id", deletePostController);
 router.put("/like-post/:id", likeAndDislikeController);
 router.get("/get-post/:id", getPostController);
-router.get("/get-timeline-post/:id", getTimelinePostsController);
+router.get("/get-timeline-post/:userId", getTimelinePostsController);
 
 export default router;
