@@ -69,9 +69,9 @@ export const getPost = async (params) => {
   }
 };
 
-export const getTimelinePosts = async (body) => {
+export const getTimelinePosts = async (params) => {
   try {
-    const currentUser = await UserModel.findById(body.userId);
+    const currentUser = await UserModel.findById(params.userId);
     const userPosts = await PostModel.find({ userId: currentUser._id });
     const timelinePosts = await Promise.all(
       currentUser.followings.map((friendId) => {
