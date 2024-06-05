@@ -8,8 +8,6 @@ export const registerUser = async (body) => {
     email: body.email,
     password: hashedPassword,
   });
-  // omit password from returned data
-  const { password, ...data } = newUser._doc;
 
   await newUser.save();
 
@@ -18,13 +16,10 @@ export const registerUser = async (body) => {
 
 export const loginUser = async (body) => {
   const user = await UserModel.findOne({ email: body.email });
-  // if (!user) {
-  //   res.status(404).json("User not found");
-  // }
-  !user && res.status(404).json("User not found");
+  !user && res.status(404).json("User not Found");
 
   const passwordCheck = await bcrypt.compare(body.password, user.password);
-  !passwordCheck && res.status(400).json("Invalid Password");
+  !passwordCheck && res.status(400).json("wrong password");
 
   return user;
 };
