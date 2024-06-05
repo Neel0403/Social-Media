@@ -2,6 +2,7 @@ import express from "express";
 import {
   createPostController,
   deletePostController,
+  getAllPostController,
   getPostController,
   getTimelinePostsController,
   likeAndDislikeController,
@@ -16,5 +17,6 @@ router.delete("/delete-post/:id", deletePostController);
 router.put("/like-post/:id", likeAndDislikeController);
 router.get("/get-post/:id", getPostController);
 router.get("/get-timeline-post/:userId", getTimelinePostsController);
+router.get("/", getAllPostController);
 
 export default router;

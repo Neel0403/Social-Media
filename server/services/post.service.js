@@ -84,3 +84,12 @@ export const getTimelinePosts = async (params) => {
     throw error;
   }
 };
+
+export const getAllPosts = async () => {
+  try {
+    const post = await PostModel.aggregate([{ sample: { size: 40 } }]);
+    return post;
+  } catch (error) {
+    throw error;
+  }
+};

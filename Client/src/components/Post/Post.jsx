@@ -3,23 +3,24 @@ import { MdOutlineMoreVert } from "react-icons/md";
 import likeIcon from "../../assets/like.png";
 import heartIcon from "../../assets/heart.png";
 import { Users } from "../../data/dummyData";
-import userImage from "./assets/userImage1.jpg";
+import userImage from "./assets/user.png";
 import axios from "axios";
+import moment from "moment";
+import postPic from "../../assets/postPic.jpg"
+import { getUserData } from "../../utils/api/api";
 
 const Post = ({ post }) => {
   const [like, setLike] = useState(post.like);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState([]);
 
-  console.log(user);
+  // console.log(user);
 
   useEffect(() => {
     const getUserInfo = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:5000/api/v1/users/${post.userId}`
-        );
-        console.log(res);
+        const res = await getUserData(post.userId)
+        // console.log(res);
         setUser(res.data.userInfo);
       } catch (error) {
         console.log(error);
@@ -46,7 +47,7 @@ const Post = ({ post }) => {
             <span className="font-bold ml-[10px] mr-[10px]">
               {user.username}
             </span>
-            <span className="text-sm">{post.date}</span>
+            <span className="text-sm">{moment(post.createdAt).fromNow()}</span>
           </div>
           <div>
             <MdOutlineMoreVert className="text-xl cursor-pointer" />
@@ -56,7 +57,7 @@ const Post = ({ post }) => {
       <div className="mt-[20px] mb-[20px]">
         <span>{post?.desc}</span>
         <img
-          src={post.photo}
+          src={postPic}
           alt="Post Picture"
           className="mt-[20px] w-full object-contain"
           style={{ maHeight: "500px" }}
@@ -80,7 +81,7 @@ const Post = ({ post }) => {
         </div>
         <div>
           <span className="cursor-pointer border-b-[1px] border-slate-300 text-sm">
-            {post.comment}
+            {post.comment} comments
           </span>
         </div>
       </div>

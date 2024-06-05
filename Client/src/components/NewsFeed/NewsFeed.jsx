@@ -3,16 +3,15 @@ import UploadPost from "../UploadPost/UploadPost";
 import Post from "../Post/Post";
 import { Posts } from "../../data/dummyData";
 import axios from "axios";
+import { getAllPosts, getTimelinePost } from "../../utils/api/api";
 
 const NewsFeed = () => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     const timelinePosts = async () => {
       try {
-        const res = await axios.get(
-          "http://localhost:5000/api/v1/posts/get-timeline-posts/"
-        );
-        setPosts(res.data.timelinePosts);
+        const res = await getAllPosts()
+        setPosts(res.data.posts);
       } catch (error) {
         console.log(error);
       }
