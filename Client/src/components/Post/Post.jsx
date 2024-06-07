@@ -8,6 +8,7 @@ import axios from "axios";
 import moment from "moment";
 import postPic from "../../assets/postPic.jpg"
 import { getUserData } from "../../utils/api/api";
+import { Link } from "react-router-dom";
 
 const Post = ({ post }) => {
   const [like, setLike] = useState(post.like);
@@ -44,9 +45,11 @@ const Post = ({ post }) => {
               alt="Profile Picture"
               className="w-[32px] h-[32px] rounded-full object-cover"
             />
-            <span className="font-bold ml-[10px] mr-[10px]">
-              {user.username}
-            </span>
+            <Link to={`/profile/${user.username}`}>
+              <span className="font-bold ml-[10px] mr-[10px]">
+                {user.username}
+              </span>
+            </Link>
             <span className="text-sm">{moment(post.createdAt).fromNow()}</span>
           </div>
           <div>
