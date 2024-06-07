@@ -32,9 +32,11 @@ const userSchema = new Schema({
   },
   from: {
     type: String,
+    default:"India"
   },
   city: {
     type: String,
+    default:"Mumbai"
   },
   relationship: {
     type: Number,
