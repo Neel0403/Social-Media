@@ -5,7 +5,7 @@ import adImage from "../../assets/ad.jpg";
 import OnlineUsers from "../OnlineUsers/OnlineUsers";
 import { Users } from "../../data/dummyData";
 
-const RightBar = () => {
+const RightBar = ({ user }) => {
   const RightBarHome = () => {
     return (
       <>
@@ -43,19 +43,19 @@ const RightBar = () => {
             <span className="font-semibold mr-[15px] text-slate-500">
               City:
             </span>
-            <span>Mumbai</span>
+            <span>{user.city}</span>
           </div>
           <div className="mb-[10px]">
             <span className="font-semibold mr-[15px] text-slate-500">
               From:
             </span>
-            <span>Mumbai</span>
+            <span>{user.from}</span>
           </div>
           <div className="mb-[10px]">
             <span className="font-semibold mr-[15px] text-slate-500">
               Relationship:
             </span>
-            <span>Single</span>
+            <span>{user.relationship === 1 ? "Single" : user.relationship === 2 ? "Married" : "Prefer not to say"}</span>
           </div>
           <h1 className="font-bold text-xl mb-[10px]">Friends</h1>
           <div className="grid grid-cols-3 gap-4">
@@ -115,7 +115,7 @@ const RightBar = () => {
   return (
     <div style={{ flex: 3.5, zIndex: -1 }} className="">
       <div className="pt-[20px] pr-[20px]">
-        <RightBarProfile />
+        {user ? <RightBarProfile /> : <RightBarHome />}
       </div>
     </div>
   );
