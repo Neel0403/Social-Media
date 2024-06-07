@@ -3,6 +3,7 @@ import {
   deleteUserController,
   followUserController,
   getUserController,
+  getUserProfileController,
   unfollowUserController,
   updateUserController,
 } from "../controllers/user.controller.js";
@@ -19,5 +20,7 @@ router.get("/:id", getUserController);
 router.put("/follow/:id", followUserController);
 // unfollow user
 router.put("/unfollow/:id", unfollowUserController);
+// get user profile
+router.get("/", getUserProfileController)
 
 export default router;

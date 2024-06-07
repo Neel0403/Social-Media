@@ -2,6 +2,7 @@ import {
   deleteUser,
   followUser,
   getUser,
+  getUserProfile,
   unfollowUser,
   updateUser,
 } from "../services/user.service.js";
@@ -42,6 +43,20 @@ export const deleteUserController = async (req, res) => {
 export const getUserController = async (req, res) => {
   try {
     const user = await getUser(req.params.id);
+    const { password, ...data } = user._doc;
+    res.status(200).json({
+      userInfo: data,
+      message: "Account has been fetched successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
+
+export const getUserProfileController = async (req, res) => {
+  try {
+    const user = await getUserProfile(req.query);
     const { password, ...data } = user._doc;
     res.status(200).json({
       userInfo: data,

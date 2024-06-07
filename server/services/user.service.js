@@ -43,6 +43,15 @@ export const getUser = async (userId) => {
   }
 };
 
+export const getUserProfile = async (query) => {
+  try {
+    const user = await UserModel.findOne(query.username);
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const followUser = async (userData, updateData) => {
   if (userData.userId === updateData.id) {
     throw new Error("You cannot follow yourself");
