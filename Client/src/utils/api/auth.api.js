@@ -15,3 +15,5 @@ export const loginAuth = async (userInfo, dispatch) => {
         })
     }
 }
+
+export const registerUser = (data) => API.post("/auth/register", data)
