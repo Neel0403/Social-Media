@@ -1,21 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { MdOutlineMoreVert } from "react-icons/md";
 import likeIcon from "../../assets/like.png";
 import heartIcon from "../../assets/heart.png";
 import { Users } from "../../data/dummyData";
-import userImage from "./assets/user.png";
-import axios from "axios";
+import userPic from "./assets/user.png";
 import moment from "moment";
 import postPic from "../../assets/postPic.jpg"
-import { getUserData } from "../../utils/api/api";
+import { getUserData, likeAndDislikePost } from "../../utils/api/api";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AuthContext } from "../../context/AuthContext";
 
 const Post = ({ post }) => {
   const [like, setLike] = useState(post.like);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState([]);
+  const { user: currentUser } = useContext(AuthContext);
 
   // console.log(user);
+
+  useEffect(() => {
+    setIsLiked(post.likes.includes(currentUser._id))
+  }, [currentUser._id, post.likes])
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -31,7 +37,13 @@ const Post = ({ post }) => {
     getUserInfo();
   }, [post.userId]);
 
-  const handleLike = () => {
+  const handleLike = async () => {
+    try {
+      await likeAndDislikePost(post._id, currentUser._id)
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message)
+    }
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
@@ -41,7 +53,7 @@ const Post = ({ post }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <img
-              src={user.profilePicture || userImage}
+              src={user.profilePicture? user.profilePicture : userPic}
               alt="Profile Picture"
               className="w-[32px] h-[32px] rounded-full object-cover"
             />
@@ -63,7 +75,7 @@ const Post = ({ post }) => {
           src={postPic}
           alt="Post Picture"
           className="mt-[20px] w-full object-contain"
-          style={{ maHeight: "500px" }}
+          style={{ maxHeight: "500px" }}
         />
       </div>
       <div className="flex items-center justify-between">
