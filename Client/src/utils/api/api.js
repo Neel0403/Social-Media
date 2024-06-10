@@ -16,3 +16,18 @@ export const getUserProfileData = (username) => API.get(`/users?username=${usern
 
 
 export const likeAndDislikePost = (postId, userId) => API.put(`/posts/like-post/${postId}`, { userId: userId })
+
+export const uploadPost = async (userId, desc, img) => {
+    const formData = new FormData()
+    formData.append("userId", userId)
+    formData.append("desc", desc)
+    formData.append("img", img)
+
+    const res = await API.post("/posts/create-post", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        }
+    })
+
+    return res.data;
+}

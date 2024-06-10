@@ -8,10 +8,11 @@ import {
   likeAndDislikeController,
   updatePostController,
 } from "../controllers/post.contoller.js";
+import { parser } from "../config/cloudinary.js";
 
 const router = express.Router();
 
-router.post("/create-post", createPostController);
+router.post("/create-post", parser.single("img"), createPostController);
 router.put("/update-post/:id", updatePostController);
 router.delete("/delete-post/:id", deletePostController);
 router.put("/like-post/:id", likeAndDislikeController);

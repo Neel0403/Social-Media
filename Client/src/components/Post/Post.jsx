@@ -12,16 +12,16 @@ import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthContext";
 
 const Post = ({ post }) => {
-  const [like, setLike] = useState(post.like);
+  const [like, setLike] = useState(post.likes?.length);
   const [isLiked, setIsLiked] = useState(false);
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
   const { user: currentUser } = useContext(AuthContext);
 
   // console.log(user);
 
   useEffect(() => {
-    setIsLiked(post.likes.includes(currentUser._id))
-  }, [currentUser._id, post.likes])
+    setIsLiked(post.likes?.includes(currentUser._id))
+  }, [currentUser?._id, post.likes])
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -53,7 +53,7 @@ const Post = ({ post }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <img
-              src={user.profilePicture? user.profilePicture : userPic}
+              src={user.profilePicture ? user.profilePicture : userPic}
               alt="Profile Picture"
               className="w-[32px] h-[32px] rounded-full object-cover"
             />
@@ -71,12 +71,14 @@ const Post = ({ post }) => {
       </div>
       <div className="mt-[20px] mb-[20px]">
         <span>{post?.desc}</span>
-        <img
-          src={postPic}
-          alt="Post Picture"
-          className="mt-[20px] w-full object-contain"
-          style={{ maxHeight: "500px" }}
-        />
+        {post.img && (
+          <img
+            src={post.img}
+            alt="Post Picture"
+            className="mt-[20px] w-full object-contain"
+            style={{ maxHeight: "500px" }}
+          />
+        )}
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-[5px]">

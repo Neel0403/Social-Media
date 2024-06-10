@@ -3,7 +3,10 @@ import UserModel from "../models/user.model.js";
 
 export const createPost = async (body) => {
   try {
-    const newPost = new PostModel(body);
+    const newPost = new PostModel({
+      ...body,
+      img: file
+    });
 
     await newPost.save();
 
@@ -87,7 +90,7 @@ export const getTimelinePosts = async (params) => {
 
 export const getAllPosts = async () => {
   try {
-    const post = await PostModel.aggregate([{ sample: { size: 40 } }]);
+    const post = await PostModel.aggregate([{ $sample: { size: 40 } }]);
     return post;
   } catch (error) {
     throw error;
