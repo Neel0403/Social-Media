@@ -2,7 +2,7 @@ import React from "react";
 
 const OnlineUsers = ({ user }) => {
   return (
-    <li className="flex items-center mb-[10px]">
+    <li className="flex items-center mb-[10px]" key={user.id}>
       <div className="mr-[10px] relative">
         <img
           src={user.profilePicture}

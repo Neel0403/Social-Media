@@ -14,12 +14,16 @@ export const registerUser = async (body) => {
   return newUser;
 };
 
-export const loginUser = async (body) => {
+export const loginUser = async (body, res) => {
   const user = await UserModel.findOne({ email: body.email });
-  !user && res.status(404).json("User not Found");
+  if (!user) {
+    throw new Error("User not found");
+  }
 
   const passwordCheck = await bcrypt.compare(body.password, user.password);
-  !passwordCheck && res.status(400).json("wrong password");
+  if (!passwordCheck) {
+    throw new Error("Wrong Password")
+  }
 
   return user;
 };

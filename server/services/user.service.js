@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import UserModel from "../models/user.model.js";
+import mongoose from "mongoose";
 
 export const updateUser = async (userId, updateData) => {
   if (updateData.password) {
@@ -26,6 +27,19 @@ export const updateUser = async (userId, updateData) => {
   }
 };
 
+export const updateProfilePicture = async (userId, newProfilePicture) => {
+  try {
+    const user = await UserModel.findByIdAndUpdate(userId, {
+      $set: {
+        profilePicture: newProfilePicture
+      }
+    }, { new: true });
+    return user;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const deleteUser = async (userId) => {
   try {
     await UserModel.findByIdAndDelete(userId);
@@ -45,7 +59,7 @@ export const getUser = async (userId) => {
 
 export const getUserProfile = async (query) => {
   try {
-    const user = await UserModel.findOne(query.username);
+    const user = await UserModel.findOne({ username: query.username });
     return user;
   } catch (error) {
     throw error;
@@ -59,7 +73,7 @@ export const followUser = async (userData, updateData) => {
     try {
       const user = await UserModel.findById(userData.userId);
       const currentUser = await UserModel.findById(updateData.id);
-      if (!user.followers.includes(userData.userId)) {
+      if (!user.followings.includes(updateData.id)) {
         await currentUser.updateOne({ $push: { followers: userData.userId } });
         await user.updateOne({ $push: { followings: updateData.id } });
         return { user, currentUser };
@@ -79,7 +93,7 @@ export const unfollowUser = async (userData, updateData) => {
     try {
       const user = await UserModel.findById(userData.userId);
       const currentUser = await UserModel.findById(updateData.id);
-      if (!user.followers.includes(userData.userId)) {
+      if (user.followings.includes(updateData.id)) {
         await currentUser.updateOne(
           { $pull: { followers: userData.userId } },
           { new: true }
@@ -95,5 +109,36 @@ export const unfollowUser = async (userData, updateData) => {
     } catch (error) {
       throw error;
     }
+  }
+};
+
+export const getUserFriends = async (params) => {
+  try {
+    if (!params.userId || !mongoose.Types.ObjectId.isValid(params.userId)) {
+      throw new Error("Invalid userId");
+    }
+    const user = await UserModel.findById(params.userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const friends = await Promise.all(
+      user.followings.map((friendId) => UserModel.findById(friendId))
+    )
+
+    const friendList =
+      friends
+        .filter((friend) => friend !== null)
+        .map((friend) => {
+          const { _id, username, profilePicture } = friend
+          return { _id, username, profilePicture }
+        })
+    // const friendList = [];
+    // friends.map((friend) => {
+    //   friendList.push({ _id, username, profilePicture })
+    // })
+    return friendList;
+  } catch (error) {
+    throw error;
   }
 };

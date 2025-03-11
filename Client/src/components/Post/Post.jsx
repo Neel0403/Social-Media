@@ -25,12 +25,14 @@ const Post = ({ post }) => {
 
   useEffect(() => {
     const getUserInfo = async () => {
-      try {
-        const res = await getUserData(post.userId)
-        // console.log(res);
-        setUser(res.data.userInfo);
-      } catch (error) {
-        console.log(error);
+      if (post.userId) {
+        try {
+          const res = await getUserData(post.userId)
+          // console.log(res);
+          setUser(res.data.userInfo);
+        } catch (error) {
+          console.log(error);
+        }
       }
     };
 
@@ -40,12 +42,12 @@ const Post = ({ post }) => {
   const handleLike = async () => {
     try {
       await likeAndDislikePost(post._id, currentUser._id)
+      setLike(isLiked ? like - 1 : like + 1);
+      setIsLiked(!isLiked);
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message)
     }
-    setLike(isLiked ? like - 1 : like + 1);
-    setIsLiked(!isLiked);
   };
   return (
     <div className="w-full rounded-md shadow-lg mt-[30px] mb-[30px] p-[10px]">

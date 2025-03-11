@@ -1,20 +1,19 @@
 import React, { useContext } from "react";
-import { IoSearch } from "react-icons/io5";
-import { IoPersonSharp } from "react-icons/io5";
-import { IoChatboxEllipses } from "react-icons/io5";
-import { IoIosNotifications } from "react-icons/io";
+import { IoSearch, IoPersonSharp, IoChatboxEllipses, IoIosNotifications } from "react-icons/io5";
 import Logo from "../Logo/Logo";
-import profilePic from "../../assets/profilePic.png";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import noProfilePic from "../../pages/Profile/assets/user.png"
+import noProfilePic from "../../pages/Profile/assets/user.png";
 
 const Navbar = () => {
-  const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
   return (
-    <div className="h-[50px] w-full bg-green-600 flex items-center sticky top-0">
-      <div className="left bg-red" style={{ flex: 3 }}>
+    <div
+      className="h-[50px] w-full bg-green-600 flex items-center fixed top-0 left-0 z-50 px-4"
+      style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}
+    >
+      <div className="left" style={{ flex: 3 }}>
         <Link to={"/"}>
           <div className="logodiv cursor-pointer">
             <Logo />
@@ -26,7 +25,7 @@ const Navbar = () => {
           <IoSearch className=" text-lg ml-[10px]" />
           <input
             type="text"
-            className="search w-full focus:outline-none bg-none m-[10px]"
+            className="search w-full focus:outline-none m-[10px] bg-transparent"
           />
         </div>
       </div>
@@ -34,7 +33,7 @@ const Navbar = () => {
         className="right flex items-center justify-around text-white"
         style={{ flex: 4 }}
       >
-        <div className="tabLinks text-lg cursor-pointer flex gap-[10px] ">
+        <div className="tabLinks text-lg cursor-pointer flex gap-[10px]">
           <span className="tabLink1 font-bold">Home</span>
           <span className="tablink2 font-bold">Timeline</span>
         </div>
@@ -58,12 +57,14 @@ const Navbar = () => {
             </span>
           </div>
         </div>
-        <div className="profilePicDiv">
-          <img
-            src={user.profilePicture ? user.profilePicture : noProfilePic}
-            alt="User Profile Picture"
-            className="w-[32px] h-[32px] object-cover rounded-full cursor-pointer"
-          />
+        <div className="profilePicDiv ml-4">
+          <Link to={`/profile/${user?.username}`}>
+            <img
+              src={user?.profilePicture ? user.profilePicture : noProfilePic}
+              alt="User Profile Picture"
+              className="w-[32px] h-[32px] object-cover rounded-full cursor-pointer"
+            />
+          </Link>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import PostModel from "../models/post.model.js";
 import UserModel from "../models/user.model.js";
 
-export const createPost = async (body) => {
+export const createPost = async (body, file) => {
   try {
     const newPost = new PostModel({
       ...body,
